@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  h1, h2, h3, h4 { @apply font-head tracking-wide; }
+}
+
+@layer components {
+  .container-x { @apply w-[92%] max-w-[1240px] mx-auto; }
+  .section-title {
+    @apply font-head text-2xl md:text-4xl uppercase relative pl-4;
+  }
+  .section-title::before {
+    content: '';
+    @apply absolute left-0 top-[15%] bottom-[15%] w-[5px] rounded bg-khf-red;
+  }
+  .btn { @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm transition; }
+  .btn-primary { @apply btn bg-khf-red text-white hover:bg-red-700; }
+  .btn-ghost { @apply btn bg-white/10 border border-white/25 text-white hover:bg-khf-red hover:border-khf-red; }
+  .card { @apply bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden; }
+  .tag { @apply inline-block text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded; }
+  .tag-league { @apply tag bg-sky-100 text-sky-700; }
+  .tag-women { @apply tag bg-pink-100 text-pink-700; }
+  .tag-national { @apply tag bg-green-100 text-green-700; }
+  .tag-dev { @apply tag bg-amber-100 text-amber-700; }
+  .panel { @apply bg-white rounded-xl shadow-md p-5; }
+  .fixture { @apply border border-slate-100 rounded-lg p-3 hover:border-slate-300 hover:bg-slate-50 transition space-y-1; }
+  .status-scheduled { @apply text-xs font-bold text-sky-700 bg-sky-100 px-2 py-0.5 rounded self-start; }
+  .status-live { @apply text-xs font-bold text-white bg-khf-red px-2 py-0.5 rounded self-start animate-pulse; }
+  .status-completed { @apply text-xs font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded self-start; }
+  .status-postponed { @apply text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded self-start; }
+  .status-cancelled { @apply text-xs font-bold text-red-700 bg-red-100 px-2 py-0.5 rounded self-start; }
+  .table-mini th { @apply text-left text-[11px] uppercase text-slate-500 font-semibold pb-2; }
+  .table-mini td { @apply py-2 text-sm border-t border-slate-100; }
+  .page-hero {
+    @apply bg-khf-black text-white py-16 relative overflow-hidden;
+  }
+  .page-hero::before {
+    content: '';
+    @apply absolute inset-0 opacity-25;
+    background-image: url('https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+  }
+}
