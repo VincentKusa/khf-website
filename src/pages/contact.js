@@ -1,3 +1,5 @@
+import { SITE_URL } from '../config.js';
+
 export default function contact() {
   return `
   <section class="page-hero">
@@ -6,6 +8,7 @@ export default function contact() {
       <p class="text-slate-300 mt-2">Get in touch with the Kenya Handball Federation.</p>
     </div>
   </section>
+
   <section class="py-16">
     <div class="container-x grid gap-8 md:grid-cols-2">
       <div class="space-y-4">
@@ -14,6 +17,7 @@ export default function contact() {
           <p class="text-sm text-slate-600">📍 KHF Secretariat, Nairobi, Kenya</p>
           <p class="text-sm text-slate-600 mt-1">📧 info@kenyahandball.or.ke</p>
           <p class="text-sm text-slate-600 mt-1">📞 +254 700 000 000</p>
+          <p class="text-sm text-slate-600 mt-1">🌐 ${SITE_URL}</p>
         </div>
         <div class="panel">
           <h3 class="font-head text-xl uppercase mb-2">Media Enquiries</h3>

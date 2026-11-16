@@ -1,6 +1,11 @@
-import { fixtures, competitions } from '../data.js';
+import { api } from '../api.js';
 
-export default function fixturesPage() {
+export default async function fixturesPage() {
+  const [fixtures, competitions] = await Promise.all([
+    api.fixtures(),
+    api.competitions(),
+  ]);
+
   return `
   <section class="page-hero">
     <div class="relative container-x">

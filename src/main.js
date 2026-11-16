@@ -1,5 +1,6 @@
 import './style.css';
 import { layout } from './components/layout.js';
+import { SITE_URL } from './config.js';
 
 import home from './pages/home.js';
 import about from './pages/about.js';
@@ -22,42 +23,57 @@ import contact from './pages/contact.js';
 import adminLogin from './pages/admin-login.js';
 
 const routes = {
-  '': home,
-  'about': about,
-  'competitions': competitions,
-  'competition': competition,
-  'fixtures': fixtures,
-  'standings': standings,
-  'news': news,
-  'article': article,
-  'national-teams': nationalTeams,
-  'national-team': nationalTeam,
-  'clubs': clubs,
-  'club': club,
-  'statistics': statistics,
-  'gallery': gallery,
-  'development': development,
-  'resources': resources,
-  'partners': partners,
-  'contact': contact,
+  '': home, about, competitions, competition, fixtures, standings, news, article,
+  'national-teams': nationalTeams, 'national-team': nationalTeam, clubs, club,
+  statistics, gallery, development, resources, partners, contact,
   'admin-login': adminLogin,
 };
 
 function parseHash() {
   const raw = window.location.hash.replace(/^#\/?/, '');
   const [pathPart, queryPart] = raw.split('?');
-  const path = pathPart.split('/')[0] || '';
-  const params = new URLSearchParams(queryPart || '');
-  return { path, params };
+  return {
+    path: pathPart.split('/')[0] || '',
+    params: new URLSearchParams(queryPart || ''),
+  };
 }
 
-function render() {
+function loadingState() {
+  return `
+    <div class="min-h-[60vh] grid place-items-center">
+      <div class="text-center">
+        <div class="w-12 h-12 border-4 border-khf-red border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-slate-500 text-sm">Loading…</p>
+      </div>
+    </div>`;
+}
+
+function errorState(message) {
+  return `
+    <section class="py-24 text-center">
+      <h1 class="font-head text-3xl uppercase mb-2">Something went wrong</h1>
+      <p class="text-slate-500">${message}</p>
+      <a href="#/" class="btn-primary mt-6">Back to home</a>
+    </section>`;
+}
+
+async function render() {
   const { path, params } = parseHash();
   const page = routes[path] || home;
-  const content = page({ params });
   const app = document.getElementById('app');
 
-  // Admin pages don't use main layout
+  // Show loading immediately
+  app.innerHTML = loadingState();
+
+  let content;
+  try {
+    // Pages can return string OR Promise<string>
+    content = await page({ params });
+  } catch (err) {
+    console.error('[KHF] Page render failed:', err);
+    content = errorState('Unable to load this page. Please try again.');
+  }
+
   if (path === 'admin-login') {
     app.innerHTML = content;
     return;
@@ -66,7 +82,10 @@ function render() {
   app.innerHTML = layout(content, path);
   window.scrollTo(0, 0);
 
-  // mobile nav toggle
+  // Set document title from env-based site URL (SEO)
+  document.title = document.title || 'Kenya Handball Federation';
+
+  // Mobile nav
   const toggle = document.getElementById('navToggle');
   const nav = document.getElementById('mainNav');
   if (toggle && nav) {
@@ -77,7 +96,7 @@ function render() {
     };
   }
 
-  // hero slider
+  // Hero slider
   const slides = document.querySelectorAll('.hero-slide');
   if (slides.length > 1) {
     let i = 0;
