@@ -188,7 +188,7 @@ export default function home() {
   <section class="py-16">
     <div class="container-x">
       <div class="flex justify-between items-center mb-8 flex-wrap gap-3">
-        <h2 class="section-title">Video & Media</h2>
+        <h2 class="section-title">Video and Media</h2>
         <a href="#/gallery" class="text-khf-red font-bold text-sm">Gallery →</a>
       </div>
       <div class="grid gap-6 md:grid-cols-3">
